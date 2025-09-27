@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+body{
+    font-family: 'Poppins', sans-serif;
+    background: #3B71CA;
+}
+.logo {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: bold;
+    font-size: 45px;
+    color: #3B71CA;
+  }
+.box-area{
+    width: 930px;
+}
+.right-box{
+    padding: 40px 30px 40px 40px;
+}
+
+/* For small screens */
+
+@media only screen and (max-width: 768px){
+
+     .box-area{
+        margin: 0 10px;
+
+     }
+     .right-box{
+        padding: 20px;
+     }
+
+}

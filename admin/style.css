@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: #D9D9D9;
+    color: #444444;
+}
+.logo {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: bold;
+    font-size: 30px;
+    color: #3B71CA;
+}
+.side-bar{
+    height: 100vh;
+    background-color: #EEEEEE;;
+}
+.right-main{
+    padding-left: 0;
+    padding-right: 0;
+}
+.right-top-bar{
+    height: 10vh;
+    background-color: #E0E0E0;
+}
+.side-nav li{
+    margin-top: 10px;
+    font-size: 18px;
+}
+.side-nav li a{
+    color: #444444;
+}
+.side-nav .nav-item:hover{
+    background-color: #3B71CA;
+    color: #FFFFFF;
+}
+.side-nav .nav-item a:hover{
+    color: #FFFFFF;
+}
+.side-nav .nav-item .nav-active{
+    background-color: #3B71CA;
+    color: #FFFFFF;
+}
+.admin-name{
+    font-size: 18px;
+}
+.admin-role{
+    font-size: 14px;
+    color: #6D6D6D;
+}
+.input-form{
+    background-color: #F2F3F4;
+}
+.table-destination, .table-guide, .table-admin, .table-package, .table-itinerary, .table-availability, .table-type, .table-booking, .table-contact{
+    background-color: #F2F3F4;
+    width: 100%;
+}
+.container-scroll{
+    height: 90vh;
+}
+.down-button button i{
+    color: #3B71CA;
+    font-size: 18px;
+}
+.output-img{
+    height: 250px;
+}
+.output-img-small{
+    height: 200px;
+}
+.summary-box{
+    background-color: #F2F3F4;
+    width: 100%;
+}
+.dashboard-card{
+    background-color: #f0f8ff;
+    height: 100px;
+}
+.icon-container{
+    height: 70px;
+    background-color: #E0E0E0;
+}
