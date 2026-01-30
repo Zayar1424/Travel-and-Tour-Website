@@ -5,6 +5,13 @@ ob_start();
 session_start();
 require_once('../database/DbConnection.php');
 
+$id = $_SESSION['id'] ?? null;
+
+if (isset($id)) 
+{
+    echo "<script>window.location='./../customer/Home.php'</script>";  
+}
+
 if(isset($_POST['btnLogin'])){
     $validation = [
         'emailStatus' => false,

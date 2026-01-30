@@ -16,6 +16,10 @@ if (!isset($id))
     echo "<script>window.alert('Something went wrong! Please login again..')</script>";
 	echo "<script>window.location='./../auth/Login.php'</script>";  
 }
+if($role != 'admin' && $role != 'superadmin')
+{
+    echo "<script>window.location='./../customer/Home.php'</script>";  
+}
 
 // Destination Delete Success
 $destinationDeleteMessage = isset($_SESSION['destination_delete_success']) ? $_SESSION['destination_delete_success'] : null;

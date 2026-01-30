@@ -25,7 +25,7 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : "latest";
     <!-- Page Header End -->
 
     <!-- Package Body Start -->
-    <div class="mx-0 px-5 mt-5 row">
+    <div class="mx-0 px-3 px-lg-5 mt-5 row">
         <!-- Filter Start -->
         <div class="col-12 col-lg-3">
             <div class="row">
@@ -43,27 +43,33 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : "latest";
                     $destinationSelectRes = $connection -> prepare($selectDestination);
                     $destinationSelectRes -> execute();
                     $destinations = $destinationSelectRes -> fetchAll(PDO::FETCH_ASSOC);
-
-                    
+                    $selectedDestination = isset($_GET['destination']) ? $_GET['destination'] : '';
                     foreach ($destinations as $item){
                         $destinationID = $item['DestinationID'];
                         $destinationName = $item['Destination'];
-                        echo "<option value='$destinationID'>$destinationName</option>";
+                        $selected = ($selectedDestination == $destinationID) ? 'selected' : '';
+                        echo "<option value='$destinationID' $selected>$destinationName</option>";
                     }
                     ?>
                 </select>
 
                 <!-- Duration Range -->
                 <label for="durationRange" class="form-label mt-2">Max Duration (Days): <span id="durationValue">30</span></label>
-                <input type="range" class="form-range" id="durationRange" min="1" max="30" step="1" value="30">
+                <?php $selectedDuration = isset($_GET['duration']) ? $_GET['duration'] : 30; ?>
+                <input type="range" class="form-range" id="durationRange" min="1" max="30" step="1" value="<?php echo htmlspecialchars($selectedDuration); ?>">
+                <script>document.getElementById('durationValue').textContent = <?php echo json_encode($selectedDuration); ?>;</script>
 
                 <!-- Price Range -->
                 <label for="priceRange" class="form-label mt-2">Max Price (฿): <span id="priceValue">50000</span></label>
-                <input type="range" class="form-range" id="priceRange" min="1000" max="50000" step="1000" value="50000">
+                <?php $selectedPrice = isset($_GET['price']) ? $_GET['price'] : 50000; ?>
+                <input type="range" class="form-range" id="priceRange" min="1000" max="50000" step="1000" value="<?php echo htmlspecialchars($selectedPrice); ?>">
+                <script>document.getElementById('priceValue').textContent = <?php echo json_encode($selectedPrice); ?>;</script>
 
                 <!-- Size Range -->
                 <label for="sizeRange" class="form-label mt-2">Max Group Size: <span id="sizeValue">30</span></label>
-                <input type="range" class="form-range" id="sizeRange" min="2" max="25" step="1" value="30">
+                <?php $selectedSize = isset($_GET['size']) ? $_GET['size'] : 30; ?>
+                <input type="range" class="form-range" id="sizeRange" min="2" max="25" step="1" value="<?php echo htmlspecialchars($selectedSize); ?>">
+                <script>document.getElementById('sizeValue').textContent = <?php echo json_encode($selectedSize); ?>;</script>
 
                 <!-- Apply Filter Button -->
                 <button type="button" id="applyFilters" class="btn btn-primary mt-3">Apply Filters</button>
@@ -74,8 +80,8 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : "latest";
         <!-- Filter End -->
         <!-- Packages Start -->
         <div class="col">
-        <div class="col d-flex justify-content-end">
-            <div class="row">
+        <div class="col d-flex justify-content-start justify-content-lg-end">
+            <div class="row mt-4 mt-lg-0">
                 <div class="col">
                     <p class="mt-2">Sort by:</p>
                 </div>
@@ -109,7 +115,8 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : "latest";
             </div>
             
         </div>
-        <div class="row">
+        <div class="px-2 px-lg-0">
+        <div class="row gx-0">
             <?php
 
                     $noResult = false;
@@ -168,14 +175,15 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : "latest";
 
                     if($noResult){
                         echo '
-                        <p class="mt-4 mx-5">No package found.</p>
+                        <p class="mt-4 mx-0 mx-lg-5">No package found.</p>
                         ';
                     }
 
                     foreach ($packages as $package) {
                         $packageID = $package['PackageID'];
                         echo '
-                            <div class="col-12 col-sm-6 col-lg-4 mt-3 package-card">
+                            <div class="col-12 col-md-6 col-lg-4 mt-3 package-card">
+                            <div class="d-flex justify-content-center">
                                 <a href="./PackageDetail.php?packageID='.$packageID.'">
                                 <div class="card">
                                     <div class="image-container"><img src="./../images/'.$package['Image1'] .'" class=" w-100"></div>
@@ -196,14 +204,16 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : "latest";
                                 </div>
                                 </a>
                             </div>
+                            </div>
                         ';
                     }
                 ?>
             </div>
             <!-- Pagination -->
-            <ul class="pagination justify-content-start mt-4">
+            <ul class="pagination justify-content-start mt-4 <?php echo $noResult ? 'd-none' : '' ?>">
                     
             </ul>
+        </div>
         </div>
         </div>
         <!-- Packages End -->

@@ -43,16 +43,23 @@ $itinerarySelectRes -> execute([$id]);
 $itineraries = $itinerarySelectRes -> fetchAll(PDO::FETCH_ASSOC);
 
 // Fetch Availability Data
-$selectAvailability = "SELECT a.*, COALESCE(SUM(b.TotalTraveller), 0) AS TotalTraveller
-                    FROM availability a
-                    LEFT JOIN bookings b ON a.AvailabilityID = b.AvailabilityID AND b.BookingStatus IN ('pending', 'confirmed')
-                    WHERE a.PackageID=?
-                    GROUP BY a.AvailabilityID
-                    ORDER BY a.StartDate ASC
-";
+$noAvailability = false;
+$selectAvailability = "SELECT a.*, COALESCE(SUM(b.TotalTraveller), 0) AS TotalTraveller, p.Size
+    FROM availability a
+    LEFT JOIN bookings b ON a.AvailabilityID = b.AvailabilityID AND b.BookingStatus IN ('pending', 'confirmed')
+    LEFT JOIN packages p ON a.PackageID = p.PackageID
+    WHERE a.PackageID=?
+      AND a.StartDate >= CURDATE()
+    GROUP BY a.AvailabilityID
+    HAVING (p.Size - TotalTraveller) > 0
+    ORDER BY a.StartDate ASC";
 $availabilitySelectRes = $connection -> prepare($selectAvailability);
 $availabilitySelectRes -> execute([$id]);
 $allAvailability = $availabilitySelectRes -> fetchAll(PDO::FETCH_ASSOC);
+
+if (count($allAvailability) == 0) {
+    $noAvailability = true;
+}
 
 // Fetch Review Data
 $selectReview = "SELECT r.*, u.FullName, u.ProfileImage FROM reviews r, users u 
@@ -79,10 +86,19 @@ if ($totalReviews > 0) {
 
 <div class="container-fluid px-0">
     <!-- Header Section Start -->
-    <div class="detail-head mx-5 mt-5">
+    <div class="detail-head mx-3 mx-lg-5 mt-5">
         <h2 class="fw-bold"><?php echo $Title ?></h2>
-        <p class="text-secondary d-flex align-items-center">Destination: <span class="fw-bold ms-2"><?php echo $Destination ?></span><i class="fa-solid fa-circle dot mx-2"></i><i class="fas fa-star text-warning me-1"></i><?php echo $overallRating ?> (<?php echo $totalReviews ?> <?php echo $totalReviews ==1 ? 'review':'reviews' ?>)</p>
-
+        <div class="d-flex flex-column flex-md-row mt-3 mb-3">
+            <div>
+                <span class="text-secondary">Destination: <span class="fw-bold ms-2"><?php echo $Destination ?></span></span>
+            </div>
+            <div class="d-flex align-items-center">
+                <i class="fa-solid fa-circle dot mx-2 d-none d-md-block"></i>
+                <i class="fas fa-star text-warning me-1"></i>
+                <span><?php echo $overallRating ?> (<?php echo $totalReviews ?> <?php echo $totalReviews ==1 ? 'review':'reviews' ?>)</span>
+            </div>
+        </div>
+        
         <div class="row mx-0">
             <div class="col-lg-8 d-none d-md-block">
                 <div class="left-detail-img-container">
@@ -105,7 +121,7 @@ if ($totalReviews > 0) {
     </div>
     <!-- Header Section End -->
     <!-- Body Section Start -->
-    <div class="detail-body mx-5 row">
+    <div class="detail-body mx-3 mx-lg-5 row">
         <div class="col-lg-7 col-12 order-2 order-md-2 order-lg-1">
             <!-- Description Start -->
             <div class="row mt-4">
@@ -194,7 +210,7 @@ if ($totalReviews > 0) {
             <!-- Highlights End -->
             <hr>
             <!-- Itinerary Start -->
-            <div class="row mt-4">
+            <div class="row mt-4 gx-0">
                 <h4 class="fw-bold mb-4">Itinerary</h4>
 
                 <?php
@@ -208,11 +224,11 @@ if ($totalReviews > 0) {
 
                     echo "
                     <div class='mt-2 row'>
-                        <div class='d-flex'>
-                        <p class='fw-bold me-2'>Day $day</p> 
+                        <div class='d-flex flex-wrap mb-1'>
+                        <span class='fw-bold me-2' style='white-space:nowrap;'>Day $day</span>
                         <span>$itineraryName</span>
                         </div>
-                        <ul class='ms-4'>
+                        <ul class='ms-2 ms-lg-4'>
                     ";
                     foreach ($activityList as $item) {
                         $trimmedItem = trim($item);
@@ -235,11 +251,11 @@ if ($totalReviews > 0) {
             <!-- Itinerary End -->
             <hr>
             <!-- Includes Start -->
-            <div class="row mt-4">
+            <div class="row mt-4 gx-0">
                 <h4 class="fw-bold mb-4">What's included?</h4>
                 <?php 
                 $includesList = preg_split('/\s*-\s*/', trim($IncludedThings));
-                echo "<ul class='ms-4'>";
+                echo "<ul class='ms-2 ms-lg-4'>";
                 foreach ($includesList as $item) {
                     $trimmedItem = trim($item);
                     if ($trimmedItem !== '') {
@@ -252,11 +268,11 @@ if ($totalReviews > 0) {
             <!-- Includes End -->
             <hr>
             <!-- Excludes Start -->
-            <div class="row mt-4">
+            <div class="row mt-4 gx-0">
                 <h4 class="fw-bold mb-4">What's not included?</h4>
                 <?php 
                 $excludesList = preg_split('/\s*-\s*/', trim($ExcludedThings));
-                echo "<ul class='ms-4'>";
+                echo "<ul class='ms-2 ms-lg-4'>";
                 foreach ($excludesList as $item) {
                     $trimmedItem = trim($item);
                     if ($trimmedItem !== '') {
@@ -269,11 +285,11 @@ if ($totalReviews > 0) {
             <!-- Excludes End -->
             <hr>
             <!-- Information Start -->
-            <div class="row mt-4">
+            <div class="row mt-4 gx-0">
                 <h4 class="fw-bold mb-4">Important Information</h4>
                 <?php 
                 $informationList = preg_split('/\s*-\s*/', trim($Information));
-                echo "<ul class='ms-4'>";
+                echo "<ul class='ms-2 ms-lg-4'>";
                 foreach ($informationList as $item) {
                     $trimmedItem = trim($item);
                     if ($trimmedItem !== '') {
@@ -286,8 +302,11 @@ if ($totalReviews > 0) {
             <!-- Information End -->
             <hr>
             <!-- Availability Start -->
-            <div class="row mt-4" id="availability">
+            <div class="row mt-4 gx-0" id="availability">
                 <h4 class="fw-bold mb-4">Availability</h4>
+                <?php if($noAvailability) { ?>
+                    <p>No available dates for this package yet.</p>
+                <?php } ?>
                 <div class="row mb-4" id="availability-list">
                     <?php
                     foreach ($allAvailability as $availability) {
@@ -304,70 +323,46 @@ if ($totalReviews > 0) {
                 
                         $currentDate = time();
                 
-                        echo "
-                            <div class='row border shadow-sm p-3 mt-4 ms-2 availability-card";
-
-                            if(strtotime($startDate)<$currentDate || $availableSpace==0){
-                                echo " d-none";
-                            }
-                            
-                        echo "' data-availability-id='$availabilityID'>
-                                <div class='row'>
-                                    <div class='col gx-0'>
-                                        <div class='row'>
-                                            <div class='col'>
-                                                <p>From</p>
-                                                <h5>$formattedStartDate</h5>
-                                            </div>
-                                            <div class='col'>
-                                                <p>To</p>
-                                                <h5>$formattedEndDate</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class='col gx-0'>
-                                        <div class='row'>
-                                            <div class='col-8 ps-5'>
-                                                <p>Price:</p>
-                                            </div>
-                                            <div class='col'>
-                                                <h5>฿$availabilityPrice</h5>
-                                                <span class='text-secondary'>per person</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class='row'>
-                                    <div class='col'>
-                                    <p class='";
-                                    if($availableSpace == 1){
-                                        echo "d-none";
-                                    }
-                                echo "'><i class='fa-solid fa-people-group text-dark'></i><span class='ms-1'>$availableSpace spaces left</span></p>";
-
-                                    if($availableSpace == 1){
-                                        echo "<p><i class='fa-solid fa-people-group text-dark'></i><span class='ms-1 text-danger'>Only $availableSpace space left!</span></p>";
-                                    }
-                                echo "</div>
-                                    <div class='col d-flex justify-content-end btn-confirm-date'>
-                                        <a href='./Booking.php?availabilityID=$availabilityID' class='btn btn-primary rounded-pill' target='_blank'>Confirm</a>
-                                    </div>
-                                </div>
-                            </div>
-                        ";
+                        echo "<div class='col-12 col-md-6 col-lg-4 d-flex mt-2'>";
+                        echo "<div class='availability-card border border-1 border-secondary rounded-4 p-3 bg-white' style='min-width:220px;'>";
+                        echo "<div class='d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-2 mb-2'>";
+                        echo "<div>";
+                        echo "<span class='text-secondary small'>From</span><div class='fw-bold text-dark'>$formattedStartDate</div>";
+                        echo "</div>";
+                        echo "<div>";
+                        echo "<span class='text-secondary small'>To</span><div class='fw-bold text-dark'>$formattedEndDate</div>";
+                        echo "</div>";
+                        echo "</div>";
+                        echo "<div class='d-flex align-items-center justify-content-between mt-2'>";
+                        echo "<div>";
+                        echo "<span class='text-primary fw-bold h5 mb-0'>฿$availabilityPrice</span> <span class='text-secondary small'>/person</span>";
+                        echo "</div>";
+                        echo "<div>";
+                        if ($availableSpace == 1) {
+                            echo "<span class='badge bg-danger text-white px-2 py-1'>Only 1 left!</span>";
+                        } else {
+                            echo "<span class='badge bg-success text-white px-2 py-1'>$availableSpace left</span>";
+                        }
+                        echo "</div>";
+                        echo "</div>";
+                        echo "<div class='d-flex justify-content-end mt-3'>";
+                        echo "<a href='./Booking.php?availabilityID=$availabilityID' class='btn btn-outline-primary rounded-pill px-3 py-1' target='_blank'>Book Now</a>";
+                        echo "</div>";
+                        echo "</div>";
+                        echo "</div>";
                     }
                     ?>
                     
                 </div>
                 <!-- Pagination -->
-                <ul class="pagination2 pagination justify-content-start">
+                <ul class="pagination2 pagination justify-content-start <?php echo $noAvailability ? 'd-none' : '' ?>">
                     
                 </ul>
             </div>
             <!-- Availability End -->
             <hr>
             <!-- Rating Start -->
-            <div class="row mt-4">
+            <div class="row mt-4 gx-0">
                 <h4 class="fw-bold mb-3">Rate Our Tour!</h4>
             
                 <?php
@@ -446,22 +441,33 @@ if ($totalReviews > 0) {
                         $ratings = $review['Rating'];
                         $comments = $review['Comment'];
                         $reviewTime = $review['CreatedAt'];
+                        $reviewUserID = $review['UserID'];
 
                         $formattedTime = date("Y-M-d", strtotime($reviewTime));
 
                         echo "
                             <div class='mt-4 review'>
-                                <div class='row'>
-                                <div class='col-1'>
+                                <div class='review-profile'>
+                                <div class=''>
                                 <img src='
                         ";
                         echo $profile ? "./../images/" . $profile : "./../images/user_profile.jpg";
                         echo "' class='rounded-circle' width='50' height='50' alt='Profile Picture'>
                                 </div>
-                                <div class='col ms-4'>
+                                <div class=''>
                                 <p class='mb-0'>$userName</p>
                                 <span class='text-secondary'>$formattedTime</span>
                                 </div>
+                                ";
+
+                        if($userID == $reviewUserID){
+                            echo "
+                            <div class='test-end ms-auto mt-1'>     
+                                <i class='fa-solid fa-trash text-danger delete-review-btn' data-review-id='".$review['ReviewID']."' title='Delete this review'></i>
+                            </div>
+                            ";
+                        }
+                        echo "
                                 </div>
 
                                 <div class='row mt-3'>
@@ -484,20 +490,44 @@ if ($totalReviews > 0) {
 
         </div>
         <div class="col order-1 order-md-1 order-lg-2">
-            <div class="mt-4 border shadow-sm availability-box rounded">
-                <div class="row p-3">
-                    <div class="col-3">
-                        <h5>฿<?php echo $Price ?></h5>
-                        <span class="text-secondary">per person</span>
-                    </div>
-                    <div class="col">
-                        <a href="#availability" class="btn btn-lg btn-primary rounded-pill">Check Availability</a>
-                    </div>
+            <div class="mt-4 p-2 p-md-3 border-0 shadow-sm availability-box rounded-4 bg-light d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+                <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-start">
+                    <span class="text-secondary small">Starting from</span>
+                    <span class="h4 fw-bold text-primary mb-1">฿<?php echo $Price ?></span>
+                    <span class="text-secondary small">per person</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-center w-100 w-md-auto">
+                    <a href="#availability" class="btn btn-primary rounded-pill px-2 py-2 w-100 w-md-auto" style="min-width: 120px; font-size: 1rem;">Check Availability</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.delete-review-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const reviewID = btn.getAttribute('data-review-id');
+            Swal.fire({
+                title: 'Delete Review?',
+                text: 'Are you sure you want to delete this review? This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `./DeleteReview.php?reviewID=${reviewID}&&packageID=<?php echo $id ?>`;
+                }
+            });
+        });
+    });
+});
+</script>
 
 <?php
 $content = ob_get_clean();

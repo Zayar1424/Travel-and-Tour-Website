@@ -41,8 +41,8 @@ if (isset($_GET['searchKey']) && !empty($_GET['searchKey'])) {
 
 <div class="container-fluid px-0">
     
-    <h4 class="mt-4 mx-5">"<?php echo $searchKey?>"</h4>
-    <div class="mx-5 row">
+    <h4 class="mt-4 mx-3 mx-lg-5">"<?php echo $searchKey?>"</h4>
+    <div class="mx-3 mx-lg-5 row flex-column flex-md-row flex-lg-row">
         <div class="col ms-0">
         <?php
         if($packageCount == 1){
@@ -53,8 +53,8 @@ if (isset($_GET['searchKey']) && !empty($_GET['searchKey'])) {
         }
         ?>
         </div>
-        <div class="col d-flex justify-content-end">
-            <div class="row">
+        <div class="col d-flex justify-content-start justify-content-md-end justify-content-lg-end">
+            <div class="row flex-column flex-md-row flex-lg-row gx-2 <?php echo $noResult ? 'd-none' : '' ?>">
                 <div class="col">
                     <p class="mt-2">Sort by:</p>
                 </div>
@@ -92,18 +92,18 @@ if (isset($_GET['searchKey']) && !empty($_GET['searchKey'])) {
         <?php
         if($noResult){
             echo '
-            <p class="mt-4 mx-5">No package found.</p>
+            <p class="mt-4 mx-3 mx-lg-5">No package found.</p>
             ';
         }
         ?>
-    
-    <div class="px-5 mt-1">
-        <div class="row">
+
+    <div class="px-2 px-lg-5 mt-1">
+        <div class="row justify-content-center justify-content-lg-start gx-0">
             <?php
             foreach ($packages as $package) {
                 $packageID = $package['PackageID'];
                 echo '
-                    <div class="col-12 col-sm-6 col-lg-3 mt-3 package-card-1">
+                    <div class="col-12 col-sm-6 col-lg-3 mt-3 package-card-1 d-flex justify-content-center">
                         <a href="./PackageDetail.php?packageID='.$packageID.'">
                         <div class="card">
                             <div class="image-container"><img src="./../images/'.$package['Image1'] .'" class=" w-100"></div>
@@ -129,7 +129,7 @@ if (isset($_GET['searchKey']) && !empty($_GET['searchKey'])) {
             ?>
         </div>
         <!-- Pagination -->
-        <ul class="pagination1 pagination justify-content-start mt-4">
+        <ul class="pagination1 pagination justify-content-start mt-4 <?php echo $noResult ? 'd-none' : '' ?>">
                     
         </ul>
     </div>

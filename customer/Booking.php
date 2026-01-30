@@ -151,21 +151,21 @@ if(isset($_POST['btnBook'])){
 </head>
 
 <body class="booking-body mb-5">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light px-5">
-        <div class="container-fluid mx-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-0 px-lg-5">
+        <div class="container-fluid mx-3 mx-md-5">
             <a class="navbar-brand" href="./Home.php"><p class="logo">WanderWay</p></a>   
         </div>
     </nav>
 
-    <div class="mx-5">
-        <div class="mx-5">
+    <div class="mx-3 mx-md-5 gx-0">
+        <div class="mx-0 mx-lg-5 gx-0">
 
-            <div class="mx-3 container-fluid gx-0">
+            <div class="mx-0 mx-lg-3 container-fluid gx-0">
                 <div class="mt-4">
                     <h3 class="fw-bold"><?php echo $title ?></h2>
                 </div>
                 <form action="Booking.php?availabilityID=<?php echo $getID ?>" method="POST" enctype="multipart/form-data">
-                <div class="row">
+                <div class="row gx-0">
                     
                     <!-- Left Content Start -->
                     <div class="col-12 col-md-6">
@@ -279,12 +279,12 @@ if(isset($_POST['btnBook'])){
                                     <label class="mb-2"><h6>Gender</h6></label><br>
 
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
+                                        <input class="form-check-input" type="radio" name="gender" id="male" value="Male" <?php if(isset($_POST['gender'])) { if($_POST['gender'] == 'Male') echo 'checked'; } ?>>
                                         <label class="form-check-label" for="male">Male</label>
                                     </div>
 
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
+                                        <input class="form-check-input" type="radio" name="gender" id="female" value="Female" <?php if(isset($_POST['gender'])) { if($_POST['gender'] == 'Female') echo 'checked'; } ?>>
                                         <label class="form-check-label" for="female">Female</label>
                                     </div>
 
@@ -312,9 +312,9 @@ if(isset($_POST['btnBook'])){
                         <hr>
                         <div class="payment-detail-box mt-5">
                             <h5 class="fw-bold">Payment Details</h5>
-                            <div class="mt-2 p-2">
+                            <div class="mt-2">
 
-                                <div class="row mt-2">
+                                <div class="row mt-2 gx-0">
                                     <h6 class="mb-3">Choose Payment</h6>
 
                                     <?php foreach ($paymentTypes as $index => $paymentType): 
@@ -325,7 +325,10 @@ if(isset($_POST['btnBook'])){
                                     ?>
                                         <div class="row mb-3">
                                         <div class="payment-option border p-3 rounded" data-index="<?= $index ?>">
-                                            <input type="radio" name="paymentType" id="pay-<?= $index ?>" value="<?= $paymentTypeID ?>" class="d-none">
+                                            <?php // Debugging output for troubleshooting
+                                            // var_dump($_POST['paymentType'], $paymentTypeID);
+                                            ?>
+                                            <input type="radio" name="paymentType" id="pay-<?= $index ?>" value="<?= $paymentTypeID ?>" class="d-none" <?php if(isset($_POST['paymentType'])) { if($_POST['paymentType'] == $paymentTypeID) echo 'checked'; } ?>>
                                             <label for="pay-<?= $index ?>" class="d-block w-100 mb-0">
                                             <strong><?= $typeName ?></strong>
                                             </label>
@@ -351,9 +354,9 @@ if(isset($_POST['btnBook'])){
                                     ?>
                                 </div>
 
-                                <div class="row mt-5">
+                                <div class="row mt-5 gx-0">
                                     <h6 class="mb-3">Attach the screenshot of your payment here:</h6>
-                                    <input type="file" name="image" id="" class="form-control bg-light" onchange="loadFile(event, 'output')">
+                                    <input type="file" name="image" id="" class="form-control bg-light px-2" onchange="loadFile(event, 'output')">
                                     <?php
                                     if(isset($_POST['btnBook'])){
                                         if($validation['imageStatus']){
@@ -366,14 +369,14 @@ if(isset($_POST['btnBook'])){
                                     }
                                     ?>
                                     <div class="row mt-2">
-                                        <div class="col-10">
-                                        <img src="" id="output" class="w-100 img-thumbnail img-fluid output-img-small">
+                                        <div class="">
+                                        <img src="" id="output" class="w-100 img-thumbnail img-fluid output-img-small payment-img-preview"/>
                                         </div>
                                     </div>
                                 
                                 </div>
 
-                                <button type="submit" name="btnBook" class="btn btn-primary fs-6 w-100">Book Now</button>
+                                <button type="submit" name="btnBook" class="btn btn-primary fs-6 w-100 mt-2 d-none d-md-block">Book Now</button>
 
                             </div>
                         </div>
@@ -384,11 +387,11 @@ if(isset($_POST['btnBook'])){
                     <div class="col">
                         <div class="position-sticky p-2" style="top: 0;">
                             <div class="summary-box border">
-                                <div class="row pt-4 px-4">
-                                    <div class="col-5 col-md-2">
+                                <div class="row flex-column flex-lg-row pt-4 px-4">
+                                    <div class="col-6 col-md-5 col-lg-2">
                                         <img src="./../images/<?php echo $packageImage ?>" alt="" class="w-100 rounded">
                                     </div>
-                                    <div class="col">
+                                    <div class="col mt-2 mt-lg-0">
                                         <h5 class="fw-bold"><?php echo $title ?></h5>
                                     </div>
                                 </div>
@@ -457,7 +460,7 @@ if(isset($_POST['btnBook'])){
                                         <div class="d-flex align-items-center">
                                             <button type="button" class="btn btn-outline-secondary" id="decrease">-</button>
                                             
-                                            <input type="text" id="totalPeople" name="totalPeople" class="form-control text-center mx-2" value="1" style="width: 60px;" readonly>
+                                            <input type="text" id="totalPeople" name="totalPeople" class="form-control text-center mx-2" value="<?php echo $_POST['totalPeople'] ?? 1 ?>" style="width: 60px;" readonly>
                                             
                                             <button type="button" class="btn btn-outline-secondary" id="increase">+</button>
                                         </div>
@@ -491,10 +494,12 @@ if(isset($_POST['btnBook'])){
                             </div>
                             
                         </div>
+                        
                     </div>
                     <!-- Right Content End -->
                     
                 </div>
+                <button type="submit" name="btnBook" class="btn btn-primary fs-6 w-100 mt-2 d-block d-md-none">Book Now</button>
                 </form>
 
                 <?php
@@ -598,6 +603,14 @@ if(isset($_POST['btnBook'])){
         totalPriceInput.val(count * pricePerPerson);
         totalPriceDisplay.text(`฿${count * pricePerPerson}`);
     }
+
+    // Set selected day, month, year if POST
+        var selectedDay = <?php echo json_encode($_POST['dobDay'] ?? ''); ?>;
+        var selectedMonth = <?php echo json_encode($_POST['dobMonth'] ?? ''); ?>;
+        var selectedYear = <?php echo json_encode($_POST['dobYear'] ?? ''); ?>;
+        if(selectedDay) $("#day").val(selectedDay);
+        if(selectedMonth) $("#month").val(selectedMonth);
+        if(selectedYear) $("#year").val(selectedYear);
 });
 
 </script>

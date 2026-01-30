@@ -248,8 +248,8 @@ for (let i = 1; i <= 31; i++) {
 
 // Populate month options (1-12)
 const months = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
 months.forEach((month, index) => {
   const option = document.createElement('option');
@@ -270,20 +270,32 @@ for (let i = currentYear; i >= 1990; i--) {
  
 const paymentBoxes = document.querySelectorAll('.payment-option');
 
-paymentBoxes.forEach(box => {
-  box.addEventListener('click', () => {
-    // Unselect all first
-    paymentBoxes.forEach(b => {
-      b.classList.remove('selected');
-      b.querySelector('input[type="radio"]').checked = false;
-      b.querySelector('.payment-details').style.display = 'none';
-    });
 
-    // Select current
-    box.classList.add('selected');
-    box.querySelector('input[type="radio"]').checked = true;
-    box.querySelector('.payment-details').style.display = 'block';
-  });
+// Show selected payment option and details on page load (for POST back)
+paymentBoxes.forEach(box => {
+    const radio = box.querySelector('input[type="radio"]');
+    const details = box.querySelector('.payment-details');
+    if (radio.checked) {
+        box.classList.add('selected');
+        if (details) details.style.display = 'block';
+    } else {
+        box.classList.remove('selected');
+        if (details) details.style.display = 'none';
+    }
+
+    box.addEventListener('click', () => {
+        // Unselect all first
+        paymentBoxes.forEach(b => {
+            b.classList.remove('selected');
+            b.querySelector('input[type="radio"]').checked = false;
+            b.querySelector('.payment-details').style.display = 'none';
+        });
+
+        // Select current
+        box.classList.add('selected');
+        radio.checked = true;
+        if (details) details.style.display = 'block';
+    });
 });
 
 // review image

@@ -88,14 +88,16 @@ if(isset($_POST['btnUpdateUser'])){
 <div class="container-fluid overflow-auto container-scroll">
     <!-- User Form Start -->
     <div class="row mb-5">
-        <div class="mt-4 px-5">
+        <div class="mt-4 px-3 px-lg-5">
             <h4 class="">Your Profile</h4>
         </div>
-        <div class="col-12 col-lg-6 px-5 profile">
+        <div class="col-12 col-lg-6 px-lg-5 profile">
                 <div class="card mt-2 shadow-sm input-form">
                     <div class="card-body">
                         <form action="Profile.php" method="POST" enctype="multipart/form-data">
-                        <img src="./../images/<?php echo $image ? $image : './../images/user_profile.jpg'; ?>" class="img-thumbnail mb-3 rounded-circle" id="output">
+                        <div class="d-flex justify-content-center align-items-center mb-3">
+                            <img src="./../images/<?php echo $image ? $image : './../images/user_profile.jpg'; ?>" class="img-thumbnail rounded-circle" id="output">
+                        </div>
                             <div class="row mt-1">
                                 <div class="col-4">
                                     <p>Profile</p>
@@ -216,8 +218,8 @@ if(isset($_POST['btnUpdateUser'])){
                                 <div class="col">
                                     <a class="btn btn-secondary btn-sm fs-6" href="./Logout.php"><i class="fa-solid fa-right-from-bracket me-3 ms-1"></i>Logout</a>
                                 </div>
-                                <div class="col-8 d-flex justify-content-end">
-                                    <button type="submit" name="btnUpdateUser" class="btn btn-primary btn-sm fs-6" style="width: 20%;">Save</button>
+                                <div class="col col-lg-8 d-flex justify-content-end">
+                                    <button type="submit" name="btnUpdateUser" class="btn btn-primary btn-sm fs-0 fs-lg-6" style="width: 100%;">Save</button>
                                 </div>
                             </div>
                             

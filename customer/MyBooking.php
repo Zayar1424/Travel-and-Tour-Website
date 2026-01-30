@@ -29,24 +29,24 @@ $profile = $_SESSION['profile'] ?? null;
 ?>
 
 <div class="container-fluid px-0">
-    <div class="mt-4 px-5">
+    <div class="mt-4 px-3 px-lg-5">
         <h4 class="fw-bold">Your Bookings</h4>
     </div>
         <?php
         if($noResult){
             echo '
-            <p class="mt-4 mx-5">No booking found.</p>
+            <p class="mt-4 mx-0 mx-lg-5">No booking found.</p>
             ';
         }
         ?>
-    
-    <div class="px-5 mt-1">
-        <div class="row my-booking-cards">
+
+    <div class="px-2 px-lg-5 mt-1">
+        <div class="row my-booking-cards justify-content-center justify-content-lg-start gx-0">
             <?php
             foreach ($packages as $package) {
                 $packageID = $package['PackageID'];
                 echo '
-                    <div class="col-12 col-sm-6 col-lg-3 mt-3 package-card">
+                    <div class="col-12 col-md-6 col-lg-3 mt-3 package-card d-flex justify-content-center">
                         <a href="./PackageDetail.php?packageID='.$packageID.'">
                         <div class="card">
                             <div class="image-container"><img src="./../images/'.$package['Image1'] .'" class=" w-100"></div>
@@ -79,7 +79,7 @@ $profile = $_SESSION['profile'] ?? null;
         </div>
         <!-- Pagination -->
         <nav>
-            <ul class="pagination justify-content-start mt-4"></ul>
+            <ul class="pagination justify-content-start mt-4 <?php echo $noResult ? 'd-none' : '' ?>"></ul>
         </nav>
     </div>
 </div>

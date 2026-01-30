@@ -28,21 +28,21 @@ if(isset($_POST['btnSubmit'])){
     <!-- Page Header End -->
     <!-- Contact Section Start -->
     <form action="Contact.php" method="POST">
-        <div class="px-5 pt-5">    
+        <div class="px-0 px-lg-5 pt-2 pt-lg-5">    
         </div>
-        <div class="row px-5 pt-4 gx-0 contact">
+        <div class="row px-4 px-lg-5 pt-4 gx-0 contact">
             
             <div class="col-12 col-md-6">
                 <h4 class="fw-bold mt-5">Get In Touch</h4>
                 <div class="mt-4">
                     <p>Have questions or need more information about our services? Feel free to reach out, and our friendly team will assist you every step of the way.</p>
                 </div>
-                <div class="ps-3 mt-5">
+                <div class="ps-0 ps-lg-3 mt-5">
                     <div class="row mt-4">
                         <div class="col-1 pt-3 me-3">
                             <i class="fa-solid fa-location-arrow text-primary fs-1"></i>
                         </div>
-                        <div class="col ps-4">
+                        <div class="col ps-3 ps-lg-4">
                             <p class="fw-bold">Head Office</p>
                             <p>123 Soi Sukhumvit 11,Khlong Toei Nuea, Watthana, Bangkok 10110, Thailand</p>
                         </div>
@@ -51,7 +51,7 @@ if(isset($_POST['btnSubmit'])){
                         <div class="col-1 pt-3 me-3">
                             <i class="fa-solid fa-phone text-primary fs-2"></i>
                         </div>
-                        <div class="col ps-4">
+                        <div class="col ps-3 ps-lg-4">
                             <p class="fw-bold">Phone</p>
                             <p>0665896411</p>
                         </div>
@@ -60,7 +60,7 @@ if(isset($_POST['btnSubmit'])){
                     <div class="col-1 pt-3 me-3">
                         <i class="fa-solid fa-envelope text-primary fs-2"></i>
                     </div>
-                    <div class="col ps-4">
+                    <div class="col ps-3 ps-lg-4">
                         <p class="fw-bold">Email</p>
                         <p>info@wanderway.com</p>
                     </div>
@@ -69,9 +69,9 @@ if(isset($_POST['btnSubmit'])){
             </div>
             <div class="col-12 col-md-6">
                 <div class="card mt-2 shadow-sm input-form">
-                    <div class="card-body p-4">
+                    <div class="card-body p-3 p-lg-4">
                         <h5>Question? Send us a message!</h5>
-                        <div class="p-2">
+                        <div class="p-1 p-lg-2">
                             <div class="mt-2">
                                 <h6>Name</h6>
                                 <input type="text" id="" name="name" class="form-control underline-input" placeholder="Enter your name" value="<?php echo $_POST['name'] ?? null ?>">

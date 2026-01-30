@@ -16,6 +16,10 @@ if (!isset($id))
     echo "<script>window.alert('Something went wrong! Please login again..')</script>";
 	echo "<script>window.location='./../auth/Login.php'</script>";  
 }
+
+// Review delete message
+$reviewDeleteMessage = isset($_SESSION['review_delete_success']) ? $_SESSION['review_delete_success'] : null;
+unset($_SESSION['review_delete_success']); // Remove session after using it
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +54,7 @@ if (!isset($id))
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-light px-5">
+    <nav class="navbar navbar-expand-md navbar-light bg-light px-0 px-lg-5">
         <div class="container-fluid">
             <a class="navbar-brand" href="./Home.php"><p class="logo">WanderWay</p></a>
 
@@ -87,6 +91,20 @@ if (!isset($id))
     <div>
         <?php echo $content ?? ''; ?>
     </div>
+
+    <!-- Review Delete Success -->
+        <?php if ($reviewDeleteMessage): ?>
+            <script>
+                window.onload = function() {
+                    Swal.fire({
+                        title: 'Done!',
+                        text: '<?php echo addslashes($reviewDeleteMessage); ?>', // Avoid any JS errors with quotes in message
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                };
+            </script>
+        <?php endif; ?>
 </body>
 
 <footer class="mt-5">

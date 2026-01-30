@@ -46,8 +46,14 @@ body{
 }
 @media (max-width: 768px) {
     .search-bar {
-        margin-top: 80px;
-        width: 70%;
+        margin-top: 100px;
+        width: 60%;
+    }
+}
+@media (max-width: 576px) {
+    .search-bar{
+        margin-top: 20px;
+        width: 90%;
     }
 }
 
@@ -182,7 +188,7 @@ body{
     width: 100%;
 }
 .availability-box{
-    width: 400px;
+    width: 300px;
 }
 .availability-card{
     width: 100%;
@@ -216,9 +222,14 @@ body{
 {
     color: #ffc107;
 }
+
+.review-profile{
+    display: flex;
+    gap: 10px;
+}
 @media (max-width: 576px) {
     .availability-box{
-        width: 300px;
+        width: 250px;
     }
     .availability-box a{
         width: 180px;
@@ -260,11 +271,6 @@ body{
 
 .dob .form-control:focus {
   outline: none;
-}
-
-
-.dob .form-control.custom-select {
-  width: 100px; 
 }
 
 .dob .col-3 {
@@ -325,6 +331,21 @@ body{
     height: 50px;
 }
 
+.payment-img-preview{
+    max-height: 350px;
+    max-width: 250px;
+}
+
+@media (max-width: 576px) {
+.dob .form-control.custom-select {
+  width: 100%;
+  padding: 4px;
+}
+.summary-box img{
+    height: 65px;
+}
+}
+
 /* My Bookings */
 .my-booking-cards .card{
     height: 500px;
@@ -338,7 +359,6 @@ body{
 .profile img{
     width: 250px;
     height: 250px;
-    margin-left: 25%;
 }
 /* Footer */
 .footer{
