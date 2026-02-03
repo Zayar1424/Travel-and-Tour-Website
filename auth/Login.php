@@ -110,7 +110,7 @@ if(isset($_POST['btnLogin'])){
                     </div>
                 </form>
                 <div class="mt-3">
-                    <small>Don't have account? <a href="./Register.php">Sign Up</a></small>
+                    <small>Don't have an account? <a href="./Register.php">Sign Up</a></small>
                 </div>
             </div>
         </div> 

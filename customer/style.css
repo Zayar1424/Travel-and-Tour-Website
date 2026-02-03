@@ -332,7 +332,7 @@ body{
 }
 
 .payment-img-preview{
-    max-height: 350px;
+    max-height: 500px;
     max-width: 250px;
 }
 
@@ -403,4 +403,16 @@ body{
 .contact .card{
     height: auto;
     width: 100%;
+}
+/* Download Receipt Button */
+.download-receipt-btn {
+    margin-top: 10px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+}
+.download-receipt-btn:hover {
+    background: #3B71CA;
+    color: #fff;
+    border-color: #3B71CA;
 }

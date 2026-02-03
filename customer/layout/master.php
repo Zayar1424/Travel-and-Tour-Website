@@ -121,7 +121,7 @@ unset($_SESSION['review_delete_success']); // Remove session after using it
                 <a href="./About.php" class="text-decoration-none">About Us</a>
             </div>
             <div class="mb-2">
-                <a href="/.Contact.php" class="text-decoration-none">Contact</a>
+                <a href="./Contact.php" class="text-decoration-none">Contact</a>
             </div>
             <div class="mb-2">
                 <a href="./MyBooking.php" class="text-decoration-none">Bookings</a>

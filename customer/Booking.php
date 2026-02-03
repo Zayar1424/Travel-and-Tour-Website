@@ -91,8 +91,8 @@ if(isset($_POST['btnBook'])){
     $validation['fullNameStatus'] = $_POST['fullName'] == "" ? true:false;
     $validation['emailNameStatus'] = $_POST['email'] == "" ? true:false;
 
-    $phonePattern = "/^[0-9]{10}$/";
-    $validation['phoneStatus'] = !preg_match($phonePattern, $_POST['phone']) ? true:false;
+    // $phonePattern = "/^[0-9]{10}$/";
+    $validation['phoneStatus'] = $_POST['phone'] == "" ? true:false;
 
     // $validation['dobStatus'] = $_POST['dobDay'] ?? null == "" || $_POST['dobMonth'] ?? null == "" || $_POST['dobYear'] ?? null == "" ? true:false;
 
@@ -104,7 +104,7 @@ if(isset($_POST['btnBook'])){
     }else{
         $validation['dobStatus'] = false;
     }
-    $validation['dobCheck'] = !checkdate($dobDay, $dobMonth, $dobYear) ? true:false;
+    $validation['dobCheck'] = !checkdate($dobMonth, $dobDay, $dobYear) ? true:false;
 
     $genderValue = $_POST['gender'] ?? null;
     $validation['genderStatus'] = $genderValue == "" ? true:false;
@@ -216,7 +216,7 @@ if(isset($_POST['btnBook'])){
                                         if($validation['phoneStatus']){
                                             echo '
                                             <div class="row">                                     
-                                                <small class="text-danger ms-2">Enter a valid phone number which has 10 digits!</small>
+                                                <small class="text-danger ms-2">Phone number is required!</small>
                                             </div>
                                             ';
                                         }
@@ -355,7 +355,7 @@ if(isset($_POST['btnBook'])){
                                 </div>
 
                                 <div class="row mt-5 gx-0">
-                                    <h6 class="mb-3">Attach the screenshot of your payment here:</h6>
+                                    <h6 class="mb-3">Attach the screenshot of your payment</h6>
                                     <input type="file" name="image" id="" class="form-control bg-light px-2" onchange="loadFile(event, 'output')">
                                     <?php
                                     if(isset($_POST['btnBook'])){

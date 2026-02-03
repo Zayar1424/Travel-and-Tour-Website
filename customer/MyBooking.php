@@ -13,7 +13,7 @@ $profile = $_SESSION['profile'] ?? null;
 
     $noResult = false;
 
-    $selectPackages = "SELECT p.PackageID,p.Title,p.Image1,a.*,b.BookingCode,b.TotalTraveller,b.BookingStatus,pm.TotalPrice FROM packages p, availability a, bookings b, payments pm
+    $selectPackages = "SELECT p.PackageID,p.Title,p.Image1,a.*, b.BookingID,b.BookingCode,b.TotalTraveller,b.BookingStatus,pm.TotalPrice FROM packages p, availability a, bookings b, payments pm
                         WHERE p.PackageID = a.PackageID
                         AND a.AvailabilityID = b.AvailabilityID
                         AND b.BookingID = pm.BookingID
@@ -35,7 +35,7 @@ $profile = $_SESSION['profile'] ?? null;
         <?php
         if($noResult){
             echo '
-            <p class="mt-4 mx-0 mx-lg-5">No booking found.</p>
+            <p class="mt-4 mx-3 mx-lg-5">No booking found.</p>
             ';
         }
         ?>
@@ -45,16 +45,17 @@ $profile = $_SESSION['profile'] ?? null;
             <?php
             foreach ($packages as $package) {
                 $packageID = $package['PackageID'];
+                $formattedStartDate = date("Y-M-d", strtotime($package['StartDate']));
                 echo '
                     <div class="col-12 col-md-6 col-lg-3 mt-3 package-card d-flex justify-content-center">
-                        <a href="./PackageDetail.php?packageID='.$packageID.'">
+                        <a href="./BookingDetail.php?bookingID='.$package['BookingID'].'">
                         <div class="card">
                             <div class="image-container"><img src="./../images/'.$package['Image1'] .'" class=" w-100"></div>
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">'.$package['Title'].'</h5>
                                 <p class="card-text mt-2">Booking Code: '.$package['BookingCode'].'</p>
                                 <p class="card-text">Total Price: '.$package['TotalPrice'].'</p>
-                                <p class="card-text text-secondary">Start Date: '.$package['StartDate'].'</p>
+                                <p class="card-text text-secondary">Start Date: '.$formattedStartDate.'</p>
                                 <p class="card-text text-secondary">Total Traveler: '.$package['TotalTraveller'].'</p>
                                 <div class="mt-auto">';
 
