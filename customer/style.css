@@ -227,7 +227,18 @@ body{
     display: flex;
     gap: 10px;
 }
+@media (max-width: 768px) {
+    .right-detail-img-container img{
+        height: 400px;
+    }
+}
 @media (max-width: 576px) {
+    .left-detail-img-container img{
+        height: 188px;
+    }
+    .right-detail-img-container img{
+        height: 188px;
+    }
     .availability-box{
         width: 250px;
     }

@@ -45,7 +45,7 @@ $profile = $_SESSION['profile'] ?? null;
             <?php
             foreach ($packages as $package) {
                 $packageID = $package['PackageID'];
-                $formattedStartDate = date("Y-M-d", strtotime($package['StartDate']));
+                $formattedStartDate = date("d-M-Y", strtotime($package['StartDate']));
                 echo '
                     <div class="col-12 col-md-6 col-lg-3 mt-3 package-card d-flex justify-content-center">
                         <a href="./BookingDetail.php?bookingID='.$package['BookingID'].'">

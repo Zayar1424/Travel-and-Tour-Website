@@ -28,7 +28,7 @@ $availabilityData = $availabilitySelectRes -> fetch(PDO::FETCH_ASSOC);
 
 $packageID = $availabilityData['PackageID']??null;
 $startDate = $availabilityData['StartDate']??null;
-$formattedStartDate = date("Y-M-d", strtotime($startDate)); // format start date
+$formattedStartDate = date("d-M-Y", strtotime($startDate)); // format start date
 $endDate = $availabilityData['EndDate']??null;
 $availabilityPrice = $availabilityData['Price']??null;
 $getID = $availabilityData['AvailabilityID']??null;
@@ -485,12 +485,12 @@ if(isset($_POST['btnBook'])){
                                         <h5 class="fw-bold">Total Price</h5>
                                     </div>
                                     <div class="col d-flex justify-content-end">
-                                        <h5 class="fw-bold" id="totalPriceDisplay">฿<?php echo $availabilityPrice ?></h5>
+                                        <h5 class="fw-bold" id="totalPriceDisplay">฿<?php echo $_POST['totalPrice'] ?? $availabilityPrice ?></h5>
                                     </div>
                                 </div>
                                 
                                 
-                            <input type="hidden" name="totalPrice" id="totalPrice" value="<?php echo $availabilityPrice ?>">
+                            <input type="hidden" name="totalPrice" id="totalPrice" value="<?php echo $_POST['totalPrice'] ?? $availabilityPrice ?>">
                             </div>
                             
                         </div>

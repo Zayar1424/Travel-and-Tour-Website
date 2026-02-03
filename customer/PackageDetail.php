@@ -99,13 +99,13 @@ if ($totalReviews > 0) {
             </div>
         </div>
         
-        <div class="row mx-0">
-            <div class="col-lg-8 d-none d-md-block">
+        <div class="row flex flex-column flex-lg-row mx-0">
+            <div class="col-lg-8">
                 <div class="left-detail-img-container">
                     <img src="./../images/<?php echo $ImageOne ?>" alt="" class="w-100">
                 </div>
             </div>
-            <div class="col d-sm-block d-md-none d-lg-block">
+            <div class="col d-sm-block mt-4 mt-lg-0">
                 <div class="row">
                     <div class="right-detail-img-container">
                         <img src="./../images/<?php echo $ImageTwo ?>" alt="" class="w-100">
@@ -224,9 +224,13 @@ if ($totalReviews > 0) {
 
                     echo "
                     <div class='mt-2 row'>
-                        <div class='d-flex flex-wrap mb-1'>
-                        <span class='fw-bold me-2' style='white-space:nowrap;'>Day $day</span>
-                        <span>$itineraryName</span>
+                        <div class='row flex flex-column flex-lg-row mb-1 gap-1'>
+                            <div class='col-1'>
+                            <span class='fw-bold me-2' style='white-space:nowrap;'>Day $day</span>
+                            </div>
+                            <div class='col'>
+                            <span class='fw-bold'>$itineraryName</span>
+                            </div>
                         </div>
                         <ul class='ms-2 ms-lg-4'>
                     ";
@@ -318,8 +322,8 @@ if ($totalReviews > 0) {
 
                         $availableSpace = $Size - $totalTraveller;
                 
-                        $formattedStartDate = date("Y-M-d", strtotime($startDate));
-                        $formattedEndDate = date("Y-M-d", strtotime($endDate));
+                        $formattedStartDate = date("d-M-Y", strtotime($startDate));
+                        $formattedEndDate = date("d-M-Y", strtotime($endDate));
                 
                         $currentDate = time();
                 

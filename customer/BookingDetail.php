@@ -28,11 +28,11 @@ $bookingDetails = $detailsRes->fetch(PDO::FETCH_ASSOC);
                     <div class="receipt-details">
                         <div class="mb-2"><span class="fw-semibold">Booking Code:</span> <span class="text-primary"><?= htmlspecialchars($bookingDetails['BookingCode'] ?? '-') ?></span></div>
                         <div class="mb-2"><span class="fw-semibold">Tour:</span> <a href="./PackageDetail.php?packageID=<?= $bookingDetails['PackageID'] ?>"><span class="text-black"><?= htmlspecialchars($bookingDetails['Title'] ?? '-') ?></span></a></div>
-                        <div class="mb-2"><span class="fw-semibold">Start Date:</span> <span><?= htmlspecialchars(date('d M Y', strtotime($bookingDetails['StartDate'] ?? '-'))) ?></span></div>
-                        <div class="mb-2"><span class="fw-semibold">End Date:</span> <span><?= htmlspecialchars(date('d M Y', strtotime($bookingDetails['EndDate'] ?? '-'))) ?></span></div>
+                        <div class="mb-2"><span class="fw-semibold">Start Date:</span> <span><?= htmlspecialchars(date('d-M-Y', strtotime($bookingDetails['StartDate'] ?? '-'))) ?></span></div>
+                        <div class="mb-2"><span class="fw-semibold">End Date:</span> <span><?= htmlspecialchars(date('d-M-Y', strtotime($bookingDetails['EndDate'] ?? '-'))) ?></span></div>
                         <div class="mb-2"><span class="fw-semibold">Total Travellers:</span> <span><?= htmlspecialchars($bookingDetails['TotalTraveller'] ?? '-') ?></span></div>
                         <div class="mb-2"><span class="fw-semibold">Total Price:</span> <span class="text-success">฿<?= $bookingDetails['TotalPrice'] ?? 0 ?></span></div>
-                        <div class="mb-2"><span class="fw-semibold">Booking Date:</span> <span><?= htmlspecialchars(date('d M Y', strtotime($bookingDetails['CreatedAt'] ?? '-'))) ?></span></div>
+                        <div class="mb-2"><span class="fw-semibold">Booking Date:</span> <span><?= htmlspecialchars(date('d-M-Y', strtotime($bookingDetails['CreatedAt'] ?? '-'))) ?></span></div>
                         <div class="mb-2"><span class="fw-semibold">Booking Status:</span> <?php 
                         if($bookingDetails['BookingStatus'] == 'pending'){
                             echo '<span class="badge bg-primary">Pending</span>';
