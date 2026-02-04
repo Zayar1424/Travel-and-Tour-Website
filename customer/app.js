@@ -300,14 +300,18 @@ paymentBoxes.forEach(box => {
 
 // review image
 function loadFile(event, outputID){
-    var reader = new FileReader();
-
-    reader.onload = function(){
-        var output = document.getElementById(outputID);
-        output.src = reader.result;
+    var output = document.getElementById(outputID);
+    if (event.target.files && event.target.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            output.src = reader.result;
+            output.style.display = "block";
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    } else {
+        output.src = "";
+        output.style.display = "none";
     }
-
-    reader.readAsDataURL(event.target.files[0]);
 }
 
 // booking code

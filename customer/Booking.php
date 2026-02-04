@@ -369,8 +369,8 @@ if(isset($_POST['btnBook'])){
                                     }
                                     ?>
                                     <div class="row mt-2">
-                                        <div class="">
-                                        <img src="" id="output" class="w-100 img-thumbnail img-fluid output-img-small payment-img-preview"/>
+                                        <div class="d-flex justify-content-center">
+                                        <img src="" id="output" class="w-100 img-thumbnail img-fluid output-img-small payment-img-preview" style="display:none;"/>
                                         </div>
                                     </div>
                                 
