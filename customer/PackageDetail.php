@@ -342,8 +342,8 @@ if ($totalReviews > 0) {
                         echo "<span class='text-primary fw-bold h5 mb-0'>฿$availabilityPrice</span> <span class='text-secondary small'>/person</span>";
                         echo "</div>";
                         echo "<div>";
-                        if ($availableSpace == 1) {
-                            echo "<span class='badge bg-danger text-white px-2 py-1'>Only 1 left!</span>";
+                        if ($availableSpace == 3) {
+                            echo "<span class='badge bg-danger text-white px-2 py-1'>Only 3 left!</span>";
                         } else {
                             echo "<span class='badge bg-success text-white px-2 py-1'>$availableSpace left</span>";
                         }
@@ -377,6 +377,7 @@ if ($totalReviews > 0) {
                         $user = $_POST['userID'];
                         $rating = $_POST['ratings'] ?? null;
                         $comment = $_POST['comment'] ?? null;
+                        $createdAt = date("Y-m-d H:i:s");
 
                         $rating = $rating == "" ? 0:$rating;
 
@@ -385,9 +386,9 @@ if ($totalReviews > 0) {
                             exit();
                         }
                         
-                        $addReview = "INSERT INTO reviews(UserID,PackageID,Rating,Comment) VALUE(?,?,?,?)";
+                        $addReview = "INSERT INTO reviews(UserID,PackageID,Rating,Comment,CreatedAt) VALUE(?,?,?,?,?)";
                         $reviewAddRes = $connection -> prepare($addReview);
-                        $reviewAddRes -> execute([$user, $packageID, $rating, $comment]);
+                        $reviewAddRes -> execute([$user, $packageID, $rating, $comment, $createdAt]);
 
                         echo "<script>
                                     Swal.fire({
@@ -436,6 +437,46 @@ if ($totalReviews > 0) {
             <div class="row mt-4">
                 <h4 class="fw-bold mb-3">Travelers' Reviews</h4>
                 <?php
+
+                function time_elapsed_string($datetime, $full = false) {
+                            $now = new DateTime;
+                            $ago = new DateTime($datetime);
+                            $diff = $now->diff($ago);
+                    
+                            $weeks = floor($diff->d / 7);
+                            $days = $diff->d - ($weeks * 7);
+                    
+                            $string = array(
+                                'y' => 'year',
+                                'm' => 'month',
+                                'w' => 'week',
+                                'd' => 'day',
+                                'h' => 'hour',
+                                'i' => 'minute',
+                                's' => 'second',
+                            );
+                    
+                            $values = array(
+                                'y' => $diff->y,
+                                'm' => $diff->m,
+                                'w' => $weeks,
+                                'd' => $days,
+                                'h' => $diff->h,
+                                'i' => $diff->i,
+                                's' => $diff->s,
+                            );
+                    
+                            foreach ($string as $k => &$v) {
+                                if ($values[$k]) {
+                                    $v = $values[$k] . ' ' . $v . ($values[$k] > 1 ? 's' : '');
+                                } else {
+                                    unset($string[$k]);
+                                }
+                            }
+                    
+                            if (!$full) $string = array_slice($string, 0, 1);
+                            return $string ? implode(', ', $string) . ' ago' : 'just now';
+                        }
                     
 
                     $last = count($reviews) - 1; // Get the last index
@@ -447,7 +488,8 @@ if ($totalReviews > 0) {
                         $reviewTime = $review['CreatedAt'];
                         $reviewUserID = $review['UserID'];
 
-                        $formattedTime = date("Y-M-d", strtotime($reviewTime));
+
+                        $formattedTime = time_elapsed_string($reviewTime);
 
                         echo "
                             <div class='mt-4 review'>
