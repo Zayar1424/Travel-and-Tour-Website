@@ -5,7 +5,7 @@ require_once('../database/DbConnection.php');
 
 $bookingID = isset($_GET['bookingID']) ? $_GET['bookingID'] : null;
 
-$selectDetails = "SELECT p.PackageID, p.Title, a.StartDate, a.EndDate, b.BookingCode, b.TotalTraveller, b.BookingStatus, b.CreatedAt, pm.TotalPrice
+$selectDetails = "SELECT p.PackageID, p.Title, a.StartDate, a.EndDate, b.BookingCode, b.FullName, b.TotalTraveller, b.BookingStatus, b.CreatedAt, pm.TotalPrice
                   FROM packages p
                   JOIN availability a ON p.PackageID = a.PackageID
                   JOIN bookings b ON a.AvailabilityID = b.AvailabilityID
@@ -32,6 +32,7 @@ $bookingDetails = $detailsRes->fetch(PDO::FETCH_ASSOC);
                         <div class="mb-2"><span class="fw-semibold">End Date:</span> <span><?= htmlspecialchars(date('d-M-Y', strtotime($bookingDetails['EndDate'] ?? '-'))) ?></span></div>
                         <div class="mb-2"><span class="fw-semibold">Total Travellers:</span> <span><?= htmlspecialchars($bookingDetails['TotalTraveller'] ?? '-') ?></span></div>
                         <div class="mb-2"><span class="fw-semibold">Total Price:</span> <span class="text-success">฿<?= $bookingDetails['TotalPrice'] ?? 0 ?></span></div>
+                        <div class="mb-2"><span class="fw-semibold">Booked By:</span> <span><?= htmlspecialchars($bookingDetails['FullName'] ?? '-') ?></span></div>
                         <div class="mb-2"><span class="fw-semibold">Booking Date:</span> <span><?= htmlspecialchars(date('d-M-Y', strtotime($bookingDetails['CreatedAt'] ?? '-'))) ?></span></div>
                         <div class="mb-2"><span class="fw-semibold">Booking Status:</span> <?php 
                         if($bookingDetails['BookingStatus'] == 'pending'){
@@ -55,7 +56,7 @@ $bookingDetails = $detailsRes->fetch(PDO::FETCH_ASSOC);
             </div>
             <div class="text-center mt-3">
                 <button id="downloadReceiptBtn" class="btn btn-outline-primary download-receipt-btn" type="button">
-                    Download Receipt
+                    Download Receipt <i class="fa-solid fa-download ms-1"></i>
                 </button>
             </div>
         </div>
