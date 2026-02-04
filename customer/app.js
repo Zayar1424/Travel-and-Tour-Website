@@ -140,7 +140,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    var cardsPerPage = 5;
+    var cardsPerPage = 6;
     var cards = $(".availability-card");
     var cardsCount = cards.length;
     var pagesCount = Math.ceil(cardsCount / cardsPerPage);
