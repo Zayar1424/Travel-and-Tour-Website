@@ -342,8 +342,8 @@ if ($totalReviews > 0) {
                         echo "<span class='text-primary fw-bold h5 mb-0'>฿$availabilityPrice</span> <span class='text-secondary small'>/person</span>";
                         echo "</div>";
                         echo "<div>";
-                        if ($availableSpace == 3) {
-                            echo "<span class='badge bg-danger text-white px-2 py-1'>Only 3 left!</span>";
+                        if ($availableSpace <= 3 && $availableSpace > 0) {
+                            echo "<span class='badge bg-danger text-white px-2 py-1'>Only $availableSpace left!</span>";
                         } else {
                             echo "<span class='badge bg-success text-white px-2 py-1'>$availableSpace left</span>";
                         }

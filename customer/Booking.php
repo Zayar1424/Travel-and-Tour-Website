@@ -442,9 +442,11 @@ if(isset($_POST['btnBook'])){
                                             <i class='fa-solid fa-people-group text-dark'></i>
                                         </div>
                                         <div class="col">
-                                            <p class="text-dark <?php echo $availableTraveller == 1 ? 'd-none':'' ?>"><?php echo $availableTraveller ?> spaces left</p>
+                                            <p class="text-dark <?php echo $availableTraveller <= 3 && $availableTraveller > 0 ? 'd-none':'' ?>"><?php echo $availableTraveller ?> spaces left</p>
                                             <?php 
-                                                if($availableTraveller == 1){
+                                                if($availableTraveller <= 3 && $availableTraveller > 1){
+                                                    echo "<p class='text-danger'>Only $availableTraveller spaces left</p>";
+                                                } else if($availableTraveller == 1){
                                                     echo "<p class='text-danger'>Only $availableTraveller space left</p>";
                                                 }
                                             ?>
