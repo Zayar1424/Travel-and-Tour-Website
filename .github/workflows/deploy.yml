@@ -1,0 +1,32 @@
+name: Auto Deploy PHP Project
+
+on:
+  push:
+    branches:
+      - main 
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: 157.230.249.128
+          username: root
+          key: ${{ secrets.SERVER_SECRET_KEY }}
+          port: 22
+          script: |
+            cd /var/www/wanderway
+
+            git reset --hard
+            git clean -df
+            git pull origin main
+
+            chown -R www-data:www-data /var/www/wanderway
+            chmod -R 755 /var/www/wanderway
