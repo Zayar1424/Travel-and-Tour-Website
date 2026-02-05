@@ -36,7 +36,7 @@ if(isset($_POST['btnLogin'])){
        <div class="col-md-6 right-box">
             <div class="row align-items-center">
                 <div class="mb-4">
-                     <p class="logo">WanderWay</p>
+                     <p class="logo">WanderWay Deploy Test</p>
                 </div>
                 <form action="Login.php" method="POST">
                     <div class="input-group">
