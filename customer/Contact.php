@@ -68,8 +68,8 @@ if(isset($_POST['btnSubmit'])){
                 </div>
             </div>
             <div class="col-12 col-md-6">
-                <div class="card mt-2 shadow-sm input-form">
-                    <div class="card-body p-3 p-lg-4">
+                <div class="card mt-5 mt-md-2 shadow-sm input-form">
+                    <div class="card-body px-3 px-lg-4 py-4">
                         <h5>Question? Send us a message!</h5>
                         <div class="p-1 p-lg-2">
                             <div class="mt-2">

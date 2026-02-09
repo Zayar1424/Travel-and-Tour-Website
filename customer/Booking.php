@@ -79,6 +79,7 @@ if(isset($_POST['btnBook'])){
         'fullNameStatus' => false,
         'emailNameStatus' => false,
         'phoneStatus' => false,
+        'isNumber' => false,
         'dobStatus' => false,
         'dobCheck' => false,
         'genderStatus' => false,
@@ -93,6 +94,7 @@ if(isset($_POST['btnBook'])){
 
     // $phonePattern = "/^[0-9]{10}$/";
     $validation['phoneStatus'] = $_POST['phone'] == "" ? true:false;
+    $validation['isNumber'] = !is_numeric($_POST['phone']) ? true:false;
 
     // $validation['dobStatus'] = $_POST['dobDay'] ?? null == "" || $_POST['dobMonth'] ?? null == "" || $_POST['dobYear'] ?? null == "" ? true:false;
 
@@ -210,13 +212,20 @@ if(isset($_POST['btnBook'])){
                                 
                                 <div class="row mt-4">
                                     <h6>Phone</h6>
-                                    <input type="text" id="" name="phone" class="form-control underline-input" placeholder="Enter your phone number" value="<?php echo $phone ?? $_POST['phone'] ?? '' ?>">
+                                    <input type="number" id="" name="phone" class="form-control underline-input" placeholder="Enter your phone number" value="<?php echo $phone ?? $_POST['phone'] ?? '' ?>">
                                     <?php
                                     if(isset($_POST['btnBook'])){
                                         if($validation['phoneStatus']){
                                             echo '
                                             <div class="row">                                     
                                                 <small class="text-danger ms-2">Phone number is required!</small>
+                                            </div>
+                                            ';
+                                        } 
+                                        else if($validation['isNumber']){
+                                            echo '
+                                            <div class="row">                                     
+                                                <small class="text-danger ms-2">Phone number must be numeric!</small>
                                             </div>
                                             ';
                                         }
