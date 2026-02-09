@@ -117,17 +117,38 @@ body{
 .nav-btn {
     border: none;
     color: white;
-    font-size: 20px;
-    padding: 10px;
+    font-size: 24px;
+    padding: 12px 15px;
     border-radius: 50%;
     cursor: pointer;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
+    background: linear-gradient(135deg, #3B71CA 0%, #2c5aa0 100%);
+    box-shadow: 0 4px 12px rgba(59, 113, 202, 0.3);
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
-#prevBtn { left: 10px; }
-#nextBtn { right: 10px; }
+
+.nav-btn:hover {
+    background: linear-gradient(135deg, #2c5aa0 0%, #1a3a5c 100%);
+    box-shadow: 0 6px 20px rgba(59, 113, 202, 0.5);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.nav-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+#prevBtn { left: 15px; }
+#nextBtn { right: 15px; }
 /* Responsive Breakpoints */
 @media (min-width: 576px) {
     .slide { flex: 0 0 50%; } /* Show 2 items */

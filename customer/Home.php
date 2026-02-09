@@ -21,10 +21,10 @@ require_once('../database/DbConnection.php');
                             <i class="fa-solid fa-location-dot text-secondary"></i>
                         </span>
                         <input class="form-control border-0 shadow-none" name="searchKey" type="search" placeholder="Find your destination" aria-label="Search" style="background-color: transparent;">
-                        
+                        <button class="btn btn-primary rounded-pill" type="submit"><span class="d-none d-md-block">Search</span><span class="d-block d-md-none"><i class="fa-solid fa-magnifying-glass"></i></span></button>
                     </div>
                     
-                    <button class="btn btn-primary rounded-pill" type="submit">Search</button>
+                    
                 </form>
             </div>
         </div>
@@ -36,7 +36,7 @@ require_once('../database/DbConnection.php');
         <h4 class="fw-bold">Our Destinations</h4>
     </div>
     <div class="slider-container px-2 px-lg-5 pt-3">
-        <button id="prevBtn" class="nav-btn bg-secondary fs-6">&#10094;</button>
+        <button id="prevBtn" class="nav-btn fs-6">&#10094;</button>
         <div class="slider">
             <div class="slider-track">
                 <?php
@@ -64,7 +64,7 @@ require_once('../database/DbConnection.php');
                 ?>
             </div>
         </div>
-        <button id="nextBtn" class="nav-btn bg-secondary fs-6">&#10095;</button>
+        <button id="nextBtn" class="nav-btn fs-6">&#10095;</button>
     </div>
     <!-- Destinations End -->
 
